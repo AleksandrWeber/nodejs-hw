@@ -11,7 +11,7 @@ const userSchema = new Schema(
 
 userSchema.pre('save', function () {
   if (!this.username) {
-    this.username = this.email.split('@')[0];
+    this.username = this.email;
   }
 });
 
