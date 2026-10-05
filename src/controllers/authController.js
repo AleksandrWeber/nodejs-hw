@@ -2,6 +2,7 @@
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import jwt from 'jsonwebtoken';
 import { sendEmail } from '../utils/sendMail.js';
 import bcrypt from 'bcrypt';
@@ -9,6 +10,8 @@ import createHttpError from 'http-errors';
 import { User } from '../models/user.js';
 import { Session } from '../models/session.js';
 import { createSession, setSessionCookies } from '../services/auth.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const registerUser = async (req, res) => {
   const { email, password } = req.body;
@@ -119,7 +122,7 @@ export const requestResetEmail = async (req, res) => {
   );
 
   // 1. Формуємо шлях до шаблона
-  const templatePath = path.resolve('src/templates/reset-password-email.html');
+  const templatePath = path.join(__dirname, '../templates/reset-password-email.html');
   // 2. Читаємо шаблон
   const templateSource = await fs.readFile(templatePath, 'utf-8');
   // 3. Готуємо шаблон до заповнення
