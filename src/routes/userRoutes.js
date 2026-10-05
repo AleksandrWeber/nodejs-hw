@@ -9,7 +9,7 @@ const router = Router();
 router.patch(
   '/users/me/avatar',
   authenticate,
-  upload,
+  upload.single('avatar'),
   updateUserAvatar,
 );
 
